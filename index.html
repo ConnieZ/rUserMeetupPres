@@ -1758,44 +1758,46 @@ shinyUI(fluidPage(
 library(rCharts)
 shinyServer(function(input, output) {
   output$myChart &lt;- renderChart({
-    ChickWeight$Time &lt;- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)
-    chickPlot &lt;- hPlot(weight ~ Time, type=&quot;scatter&quot;, group = &quot;Diet&quot;, data=ChickWeight, title = &quot;Chicken Weight over Time&quot;)
-    chickPlot$xAxis(title = list(text = &quot;Time (Days)&quot;))
-    chickPlot$yAxis(title = list(text = &quot;Weight&quot;))
-    chickPlot$chart(width = 600, height = 450)
+    # code for the chart from Exe 1
+    # then these lines follow
     chickPlot$addParams(dom = &quot;myChart&quot;)
     return(chickPlot)    
   })})
 </code></pre>
-
-<hr>
-
-<h2>ShinyGridster</h2>
-
-<ul>
-<li>developed by Winston Chang (<a href="mailto:winston@rstudio.com">winston@rstudio.com</a>)</li>
-<li>find source files here: <a href="https://github.com/wch/shiny-gridster">https://github.com/wch/shiny-gridster</a></li>
-<li>usage: within &quot;fluidPage()&quot; or other layout function in Shiny, specify gridster block dimensions, call each block with its size and position. Margin sizes are optional. Example:
-<code>
-shinyUI(bootstrapPage(
-gridster(width = 200, height = 200, marginx = 16, marginy = 16,
-gridsterItem(col = 1, row = 1, sizex = 1, sizey = 1,
-  sliderInput(&quot;n&quot;, &quot;Input value:&quot;, min = 0, max = 50, value = 10)
-),
-gridsterItem(col = 2, row = 1, sizex = 1, sizey = 1,
-  textOutput(&quot;myText&quot;)
-),
-gridsterItem(col = 1, row = 2, sizex = 2, sizey = 1,
-  plotOutput(&quot;myPlot&quot;, height = 200)
-)))
-</code></li>
-</ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>ShinyGridster</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>developed by Winston Chang (<a href="mailto:winston@rstudio.com">winston@rstudio.com</a>)</li>
+<li>find source files here: <a href="https://github.com/wch/shiny-gridster">https://github.com/wch/shiny-gridster</a></li>
+<li>usage: within &quot;fluidPage()&quot; or other layout function in Shiny, specify gridster block dimensions, call each block with its size and position. Margin sizes are optional. Example:</li>
+</ul>
+
+<pre><code>shinyUI(bootstrapPage(
+  gridster(width = 200, height = 200, marginx = 16, marginy = 16,
+    gridsterItem(col = 1, row = 1, sizex = 1, sizey = 1,
+      sliderInput(&quot;n&quot;, &quot;Input value:&quot;, min = 0, max = 50, value = 10)
+    ),
+    gridsterItem(col = 2, row = 1, sizex = 1, sizey = 1,
+      textOutput(&quot;myText&quot;)
+    ),
+    gridsterItem(col = 1, row = 2, sizex = 2, sizey = 1,
+      plotOutput(&quot;myPlot&quot;, height = 200)
+)))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Exercise 3</h2>
   </hgroup>
@@ -1822,7 +1824,7 @@ library(shinyGridster)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-17" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Customizing Gridster</h2>
   </hgroup>
@@ -1833,7 +1835,7 @@ library(shinyGridster)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-18" style="background:;">
+<slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h2>Why Dashboards in R are Possible</h2>
   </hgroup>
@@ -1850,7 +1852,7 @@ library(shinyGridster)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-20" style="background:;">
   <hgroup>
     <h2>Things to Remember(rCharts)</h2>
   </hgroup>
@@ -1870,7 +1872,7 @@ showOutput(&quot;infChart&quot;, &quot;highcharts&quot;))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>rCharts API</h2>
   </hgroup>
@@ -1883,7 +1885,7 @@ showOutput(&quot;infChart&quot;, &quot;highcharts&quot;))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>Highcharts API Example</h2>
   </hgroup>
@@ -1902,7 +1904,7 @@ showOutput(&quot;infChart&quot;, &quot;highcharts&quot;))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>Highcharts API (Cont.)</h2>
   </hgroup>
@@ -1915,7 +1917,7 @@ showOutput(&quot;infChart&quot;, &quot;highcharts&quot;))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-23" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Example of Customization</h2>
   </hgroup>
@@ -2068,7 +2070,7 @@ showOutput(&quot;infChart&quot;, &quot;highcharts&quot;))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-24" style="background:;">
+<slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>Code for the Demo</h2>
   </hgroup>
@@ -2095,7 +2097,7 @@ samplePlot
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-26" style="background:;">
   <hgroup>
     <h2>Highcharts API (Cont.)</h2>
   </hgroup>
@@ -2108,7 +2110,7 @@ samplePlot
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h2>Resources Used (on rCharts and Shiny)</h2>
   </hgroup>
@@ -2129,7 +2131,7 @@ samplePlot
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Resources Used (on rCharts and Shiny)</h2>
   </hgroup>
@@ -2239,67 +2241,67 @@ samplePlot
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Exercise 3'>
+        data-slide=16 title='ShinyGridster'>
          16
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Customizing Gridster'>
+        data-slide=17 title='Exercise 3'>
          17
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Why Dashboards in R are Possible'>
+        data-slide=18 title='Customizing Gridster'>
          18
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Things to Remember(rCharts)'>
+        data-slide=19 title='Why Dashboards in R are Possible'>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='rCharts API'>
+        data-slide=20 title='Things to Remember(rCharts)'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Highcharts API Example'>
+        data-slide=21 title='rCharts API'>
          21
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Highcharts API (Cont.)'>
+        data-slide=22 title='Highcharts API Example'>
          22
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Example of Customization'>
+        data-slide=23 title='Highcharts API (Cont.)'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Code for the Demo'>
+        data-slide=24 title='Example of Customization'>
          24
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=25 title='Highcharts API (Cont.)'>
+        data-slide=25 title='Code for the Demo'>
          25
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=26 title='Resources Used (on rCharts and Shiny)'>
+        data-slide=26 title='Highcharts API (Cont.)'>
          26
       </a>
     </li>
@@ -2307,6 +2309,12 @@ samplePlot
       <a href="#" target="_self" rel='tooltip' 
         data-slide=27 title='Resources Used (on rCharts and Shiny)'>
          27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Resources Used (on rCharts and Shiny)'>
+         28
       </a>
     </li>
   </ul>

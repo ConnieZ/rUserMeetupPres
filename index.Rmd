@@ -254,13 +254,16 @@ shinyServer(function(input, output) {
     return(chickPlot)    
   })})
 ```
+
 ---
+
 
 ## ShinyGridster
 
 * developed by Winston Chang (winston@rstudio.com)
 * find source files here: https://github.com/wch/shiny-gridster
 * usage: within "fluidPage()" or other layout function in Shiny, specify gridster block dimensions, call each block with its size and position. Margin sizes are optional. Example:
+
 ```
 shinyUI(bootstrapPage(
   gridster(width = 200, height = 200, marginx = 16, marginy = 16,
@@ -276,6 +279,7 @@ shinyUI(bootstrapPage(
 ```
 
 ---
+
 
 ## Exercise 3
 

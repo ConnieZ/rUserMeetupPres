@@ -1640,22 +1640,22 @@ shinyUI(fluidPage(
 library(rCharts)
 shinyServer(function(input, output) {
   output$myChart <- renderChart({
-    ChickWeight$Time <- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)
-    chickPlot <- hPlot(weight ~ Time, type="scatter", group = "Diet", data=ChickWeight, title = "Chicken Weight over Time")
-    chickPlot$xAxis(title = list(text = "Time (Days)"))
-    chickPlot$yAxis(title = list(text = "Weight"))
-    chickPlot$chart(width = 600, height = 450)
+    # code for the chart from Exe 1
+    # then these lines follow
     chickPlot$addParams(dom = "myChart")
     return(chickPlot)    
   })})
 ```
+
 ---
+
 
 ## ShinyGridster
 
 * developed by Winston Chang (winston@rstudio.com)
 * find source files here: https://github.com/wch/shiny-gridster
 * usage: within "fluidPage()" or other layout function in Shiny, specify gridster block dimensions, call each block with its size and position. Margin sizes are optional. Example:
+
 ```
 shinyUI(bootstrapPage(
   gridster(width = 200, height = 200, marginx = 16, marginy = 16,
@@ -1671,6 +1671,7 @@ shinyUI(bootstrapPage(
 ```
 
 ---
+
 
 ## Exercise 3
 
