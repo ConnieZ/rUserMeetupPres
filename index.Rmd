@@ -1,0 +1,442 @@
+---
+title       : rCharts and Interactive Dashboards
+author      : by Connie Zabarovskaya
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+ext_widgets : {rCharts: [libraries/nvd3, libraries/highcharts, libraries/rickshaw]}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## A little about rCharts
+
+* rCharts is an R package to create, customize and publish interactive JavaScript visualizations from R 
+* Developed by Ramnath Vaidyanathan, creator of Slidify
+* uses a familiar lattice style plotting interface.
+* R code is converted to JavaScript on the back end, see it when you type 
+
+```
+mychart$print()
+```
+
+* rCharts by itself is interactive to a point, but within a Shiny app it allows input and modification of data in the chart
+* Installation: 
+
+```
+require(devtools) 
+install_github('rCharts', 'ramnathv') 
+```
+---
+
+## Working with rCharts
+
+Load the library, prepare data, create plot as is or assign it to a variable.
+
+ 
+
+---
+## Interactive Chart
+```{r echo = F, results = 'asis'}
+require(rCharts)
+haireye = as.data.frame(HairEyeColor)
+n1 <- hPlot(Freq ~ Hair, group = 'Eye', type = 'column',
+  data = subset(haireye, Sex == 'Male'))
+n1$chart(height = 400)
+n1$print('chart1')
+```
+
+```
+library(rCharts)
+haireye = as.data.frame(HairEyeColor)
+n1 <- hPlot(Freq ~ Hair, group = 'Eye', type = 'column',
+  data = subset(haireye, Sex == 'Male'))
+n1
+```
+
+---
+## Popular rCharts libraries:
+
+* Polychart (rPlot() function for basic, but powerful charts, inspired by ggplot2)
+* Morris (mPlot() function for pretty time-series line graphs)
+* NVD3 (nPlot() function based on d3js library for amazing interactive visualizations with little code and customization)
+* xCharts (xPlot() function for slick looking charts using d3js, made by TenXer)
+* HighCharts (hPlot() function interactive charts, time series graphs and map charts)
+* Leaflet (Leaflet$new() function for mobile-friendly interactive maps)
+* Rickshaw (Rickshaw$new() function for creating interactive time series graphs, developed at Shutterstock)
+
+---
+
+## Example 1
+
+```{r echo = F, results = 'asis'}
+require(rCharts)
+names(iris) = gsub("\\.", "", names(iris))
+plot1 <- hPlot(x="SepalLength", y="SepalWidth", type="bubble", group ="Species", size = "PetalWidth",  data=iris)
+plot1$chart(height = 400)
+plot1$print('chart2')
+```
+
+```
+names(iris) = gsub("\\.", "", names(iris))
+plot1 <- hPlot(x="SepalLength", y="SepalWidth", type="bubble", group ="Species",
+size = PetalWidth, data=iris)
+plot1
+```
+
+
+---
+
+## Example 2
+(courtesy of http://ramnathv.github.io/rCharts/)
+Try this in RStudio
+```
+library(rCharts)
+usp = reshape2::melt(USPersonalExpenditure)
+# get the decades into a date Rickshaw likes
+usp$Var2 <- as.numeric(as.POSIXct(paste0(usp$Var2, "-01-01")))
+p4 <- Rickshaw$new()
+p4$layer(value ~ Var2, group = "Var1", data = usp, type = "area", width = 560)
+# add a helpful slider 
+p4$set(slider = TRUE)
+p4$
+```
+
+See it live here: http://rcharts.io/viewer/?10aed0d9466518e9c265#.U9AWhbH-L1U
+
+---
+
+## Example 3 
+ 
+
+```{r echo = F, results = 'asis'}
+library(rCharts)
+library(reshape2)
+milbases <- read.csv("data/milbases.csv")
+reports <- read.csv("data/ufo_reports.csv")
+mergeddata <- merge(reports, milbases, by="State")
+ufo <- subset(mergeddata, State == "CALIFORNIA"| State == "TEXAS"| State == "NEW YORK" | State == "MISSOURI")
+ufo1 <- melt(ufo, id=c("State", "UFOReports"), na.rm = FALSE)
+ufoplot <- nPlot(value ~ State, group = "variable", data = ufo1, type = "multiBarChart")
+ufoplot$print('chart3')
+```
+
+---
+
+
+## Code for Example 3
+
+```
+ufo <- subset(mergeddata, State == "CALIFORNIA"| State == "TEXAS"| 
+State == "NEW YORK" | State == "MISSOURI")
+ufo1 <- melt(ufo, id=c("State", "UFOReports"), na.rm = FALSE)
+ufoplot <- nPlot(value ~ State, group = "variable", data = ufo1, 
+type = "multiBarChart")
+ufoplot
+```
+
+---
+
+
+## Example 4
+
+```{r echo = F, results = 'asis', warning = FALSE}
+library(rCharts)
+library(reshape2)
+ufoplot <- hPlot(x="Total", y = "UFOReports", data = mergeddata, type = "bubble",  
+title = "UFO Reports and Total number of Military Bases by State",  subtitle = "Size of bubble - number of AirForce Bases", 
+size = "AirForce")
+ufoplot$chart(zoomType = "xy") # will allow to draw a rectangle with mouse to zoom on an area
+ufoplot$tooltip( formatter = "#! function() { return 'All Miliary Bases: '     + this.point.x + '<br />' + 'UFO Reports: '    + this.point.y  + '<br />'; } !#")
+ufoplot$xAxis(title = list(text = "Total Number of Military Bases in State"))
+ufoplot$print('chart4')
+```
+
+---
+
+
+## Code for Example 4
+
+```
+ufoplot <- hPlot(x="Total", y = "UFOReports", data = mergeddata, type = "bubble",
+title = "UFO Reports and Total number of Military Bases by State",  
+subtitle = "Size of bubble - number of AirForce Bases", 
+size = "AirForce")
+ufoplot$chart(zoomType = "xy") # will allow to draw a rectangle with mouse to zoom on an area
+ufoplot$tooltip( formatter = "#! function() { return 'All Miliary Bases: ' + 
+this.point.x + '<br />' + 'UFO Reports: ' + this.point.y  + '<br />'; } !#")
+ufoplot$xAxis(title = list(text = "Total Number of Military Bases in State"))
+ufoplot
+```
+
+---
+
+
+## Exercise 1
+
+1. Load rCharts (first install it if you haven't yet)
+3. Transform the ChickWeight dataset (base R) so that Time variable is "fuzzy": 
+ChickWeight$Time <- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)
+4. Using Highcharts library build a "scatter" plot to show the growth pattern of chickens: weight over Time, depending on their diet type (group it by Diet), and use a relevant title, for example "Chicken Weight over Time"
+5. Rename the y-axis and x-axis default values to be descriptive and consistent
+6. Change the width of the chart to be 700px and height - 450px
+7. Call your plot, so that it gets displayed, below is a sample
+
+```
+ufoplot <- hPlot(x="Total", y = "UFOReports", data = mergeddata, type = "scatter", 
+title = "UFO Reports and Total number of Military Bases")
+ufoplot$chart(width = 450) 
+ufoplot$xAxis(title = list(text = "Total Number of Military Bases in State"))
+ufoplot
+```
+
+---
+
+## Publishing rCharts
+
+Ways to share:
+* Standalone html page (publish to gist.github.com or rpubs.com), the link is returned. Can be updated. Gist allows several files to be uploaded.
+* Within Shiny Application (functions renderChart & showOutput)
+* Embed into rmd doc, using knit2html, or into a blog post using slidify
+* To publish on gist, use your GitHub acount username and password at the prompt after this command executes:
+```ufoplot$publish('UFO Reports', host = 'gist')```
+* To publish on RPubs, use your account info and tweak RProfile if necessary (see here: http://rpubs.com/conniez/ufo_rchart):
+```ufoplot$publish('UFO Reports', host = 'rpubs')```
+* Some commands for working with Shiny and Shinyapps.io
+```
+runApp("myapp")
+library(shinyapps)
+deployApp("myapp")
+```
+
+---
+
+
+## On Gist
+<img width = 1000, src="assets/img/rCharts publisheed on gist.jpg" />
+
+
+---
+
+## On rPubs
+First it opens a confirmation dialog. Here's the result
+
+<img width = 1000, src="assets/img/rCharts on RPubs.jpg" />
+
+---
+
+## rCharts + Shiny
+
+You can host your apps in the cloud for free with ShinyApps.io. Just create an account and link to your computer. There are some performance and memory limitations.
+
+---
+
+
+## Example with rCharts (Exercise 2)
+
+```
+# ui.R
+library(rCharts)
+shinyUI(fluidPage(
+  h2("rCharts Example"),
+  showOutput("myChart", "highcharts")))
+```
+
+```
+# server.R
+library(rCharts)
+shinyServer(function(input, output) {
+  output$myChart <- renderChart({
+    ChickWeight$Time <- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)
+    chickPlot <- hPlot(weight ~ Time, type="scatter", group = "Diet", data=ChickWeight, title = "Chicken Weight over Time")
+    chickPlot$xAxis(title = list(text = "Time (Days)"))
+    chickPlot$yAxis(title = list(text = "Weight"))
+    chickPlot$chart(width = 600, height = 450)
+    chickPlot$addParams(dom = "myChart")
+    return(chickPlot)    
+  })})
+```
+---
+
+## ShinyGridster
+
+* developed by Winston Chang (winston@rstudio.com)
+* find source files here: https://github.com/wch/shiny-gridster
+* usage: within "fluidPage()" or other layout function in Shiny, specify gridster block dimensions, call each block with its size and position. Margin sizes are optional. Example:
+```
+shinyUI(bootstrapPage(
+  gridster(width = 200, height = 200, marginx = 16, marginy = 16,
+    gridsterItem(col = 1, row = 1, sizex = 1, sizey = 1,
+      sliderInput("n", "Input value:", min = 0, max = 50, value = 10)
+    ),
+    gridsterItem(col = 2, row = 1, sizex = 1, sizey = 1,
+      textOutput("myText")
+    ),
+    gridsterItem(col = 1, row = 2, sizex = 2, sizey = 1,
+      plotOutput("myPlot", height = 200)
+)))
+```
+
+---
+
+## Exercise 3
+
+0. Make the chart in your shiny app from exe 2 smaller: 390x320
+1. Add the grister function to the ui.R file in your shiny app, within the fluidPage() function. To look up an example, type:
+```
+library(shinyGridster)
+?gridster
+```
+2. Specify gridster width of 400 and height of 330.
+3. Create 3 gridsterItem's: 2 for 1st row and 1 for second row.
+4. Your chart should be in the top left element, add the following in the second on top element: create another output element in server.R, similar to mychart, but using renderTable({}) function and put this inside:
+```
+aggregate(weight ~ feed, data = chickwts, mean)
+```
+Call this in your ui.R gridsterItem using tableOutput() function and passing it the name of your output from server.R
+
+3. Remove the h2() text element; add your own conclusion using p() function in the lower element. 
+
+---
+
+## Customizing Gridster
+
+sizey and sizex can help create irregular grids (elements of different dimensions)
+
+---
+
+
+## Why Dashboards in R are Possible
+
+* R allows connecting to any database
+* invalidateLater(), reactivePoll() functions in Shiny app
+* Any graphical packages can be used for charts
+* Control layout with ShinyGridster
+* Stylesheets supported (unlimited customization)
+
+---
+
+## Things to Remember(rCharts)
+
+* In a shiny app use function: showOutput("myChart", "polychart"), where you specify the name of the output object and the name of the library in lowercase. 
+* Don't forget plot$addParams() and return() in the output element used to create rCharts in server.R file
+* If you can't see your chart in Viewer of Rstudio, try opening it in browser by clicking the Open in Browser button.
+* Sometimes, if a chart doesn't show up in a Shiny app with several rCharts, you may have to use this "wrapping" trick:
+
+```
+div(class='wrapper', tags$style(".highcharts{ height: 100%; width: 800px;}"),
+showOutput("infChart", "highcharts"))
+```
+
+---
+
+## rCharts API
+
+A lot of the "properties" of the plot object can be customized. All you need to do is get access to the documentation of the rChart library or the original JavaScript library.
+
+To demonstrate the depth of possible customization, we will use an example Highcharts JavaScript library, using their Reference page: http://api.highcharts.com/
+
+---
+
+## Highcharts API Example
+
+Below are the casual "rules" of conversion for HighCharts.
+
+* the elements of a chart are in an object in JS, that gets converted into a list in R; the main object properties will look like this, e.g. `mychart$chart()` or `mychart$plotOptions()`
+* these main properties have nested properties, and if the property you customize doesn't have more nested properties (chart: {height: 800}), then use "=" to simply assign that value to a parameter in R, e.g. `mychart$chart(height = 800)`
+* if the properties you're attemting to customize has any "nested" properties - use "=" to assign a list() inside of which you will put what is "nested", e.g.
+
+  `mychart$plotOptions(column = (dataLabels = list(enabled=TRUE)))`
+
+---
+
+## Highcharts API (Cont.)
+
+The following demonstration will make these "rules" much clearer.
+
+<img width = 1000, src="assets/img/conversion.png" />
+
+---
+
+## Example of Customization
+The following example just scratches the surface of all the things you can do in rCharts.
+
+```{r echo = F, results = 'asis', warning = FALSE}
+library(rCharts)
+fruits<-data.frame(name = c("John", "Alice", "Andy", "Sam", "John", "Alice", "Andy", "Sam"), quant = c(23, 15, 20, 10, 5, 4, 10, 8), fruit = c(rep("Apples", 4), rep("Oranges", 4)))
+
+
+samplePlot<- hPlot(quant ~ name, data = fruits, group = "fruit", type = 'column', 
+                   title = "Quantity of Fruits Collected by Children")
+samplePlot$xAxis(title = list(text="Name of Child"), type = "category", labels = list
+                 (rotation = 60, align = "left"))
+samplePlot$chart(height = 500, zoomType = "xy")
+samplePlot$colors("#339900", "#FF9900")
+samplePlot$plotOptions(column = list(stacking = "normal", dataLabels = list(enabled = T, 
+                              align = 'center', verticalAlign = "top", 
+                              color = '#FFFFFF', y = 10)))
+samplePlot$yAxis(title = list(text = "Quantity of Fruits"), tickInterval = 2)
+samplePlot$legend(align = 'center', verticalAlign = 'top', y = 30, margin = 20)
+samplePlot$show('inline', include_assets = TRUE, cdn = TRUE)
+```
+
+
+
+---
+
+
+## Code for the Demo
+
+```
+fruits<-data.frame(name = c("John", "Alice", "Andy", "Sam", "John", "Alice", "Andy", "Sam"), 
+quant = c(23, 15, 20, 10, 5, 4, 10, 8), 
+fruit = c(rep("Apples", 4), rep("Oranges", 4)))
+
+samplePlot<- hPlot(quant ~ name, data = fruits, group = "fruit", type = 'column', 
+                   title = "Quantity of Fruits Collected by Children")
+samplePlot$xAxis(title = list(text="Name of Child"), type = "category", labels = list
+                 (rotation = 60, align = "left"))
+samplePlot$chart(height = 500, zoomType = "xy")
+samplePlot$colors("#339900", "#FF9900")
+samplePlot$plotOptions(column = list(stacking = "normal", dataLabels = list(enabled = T, 
+                              align = 'center', verticalAlign = "top", 
+                              color = '#FFFFFF', y = 10)))
+samplePlot$yAxis(title = list(text = "Quantity of Fruits"), tickInterval = 2)
+samplePlot$legend(align = 'center', verticalAlign = 'top', y = 30, margin = 20)
+samplePlot
+```
+
+----
+
+
+
+## Highcharts API (Cont.)
+
+Unfortunately, this doesn't work so well for all JavaScript variables (see "formatter" in the Example 4)
+
+Print the JavaScript code to prove that everything converted correctly, using mychart$print() line.
+
+---
+
+
+## Resources Used (on rCharts and Shiny)
+
+* Getting Started: http://ramnathv.github.io/rCharts/
+* What happens behind the scenes: http://rcharts.io/howitworks/ 
+* Presentation on how to share: http://rcharts.io/NYC_May_2014/slides/02_share/#5
+* Examples by creator: http://ramnathv.github.io/rChartsShiny/
+* Example of shiny app with downloading data from internet: https://github.com/ramnathv/rChartsShiny/blob/gh-pages/rChartOECD/global.R
+* Great examples of all types of charts in NVD3: http://ramnathv.github.io/posts/rcharts-nvd3/index.html
+* Great examples with Highcharts: http://rpubs.com/kohske/12409 (and this one http://rstudio-pubs-static.s3.amazonaws.com/16699_4bc388ebe1454c84aaab3d22d17e3aaf.html)
+* What chart to use when: http://timelyportfolio.github.io/rCharts_nvd3_systematic/cluster_weights.html
+* Examples from Ramnath NVD3: https://github.com/ramnathv/rCharts/blob/master/inst/libraries/nvd3/examples.R
+
+---
+
+
+## Resources Used (on rCharts and Shiny)
+
+* How to embed into Rmarkdown: http://bl.ocks.org/ramnathv/raw/8084330/ (and this http://timelyportfolio.github.io/rCharts_share/showingoff.html)
+* A very detailed explanation on how to use Highcharts API for rCharts:http://reinholdsson.github.io/rcharts-highcharts-api-docs/
+

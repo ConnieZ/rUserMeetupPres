@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>rCharts and Interactive Dashboards</title>
+  <meta charset="utf-8">
+  <meta name="description" content="rCharts and Interactive Dashboards">
+  <meta name="author" content="by Connie Zabarovskaya">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/nvd3/css/nv.d3.css"></link>
+<link rel=stylesheet href="libraries/widgets/nvd3/css/rNVD3.css"></link>
+<link rel=stylesheet href="libraries/widgets/rickshaw/css/rickshaw.min.css"></link>
+<link rel=stylesheet href="libraries/widgets/rickshaw/css/jquery-ui.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  <script src="libraries/widgets/nvd3/js/jquery-1.8.2.min.js"></script>
+<script src="libraries/widgets/nvd3/js/d3.v3.min.js"></script>
+<script src="libraries/widgets/nvd3/js/nv.d3.min-new.js"></script>
+<script src="libraries/widgets/nvd3/js/fisheye.js"></script>
+<script src="libraries/widgets/highcharts/js/jquery-1.9.1.min.js"></script>
+<script src="libraries/widgets/highcharts/js/highcharts.js"></script>
+<script src="libraries/widgets/highcharts/js/highcharts-more.js"></script>
+<script src="libraries/widgets/highcharts/js/exporting.js"></script>
+<script src="libraries/widgets/rickshaw/js/d3.v2.min.js"></script>
+<script src="libraries/widgets/rickshaw/js/rickshaw.min.js"></script>
+<script src="libraries/widgets/rickshaw/js/jquery.min.js"></script>
+<script src="libraries/widgets/rickshaw/js/jquery-ui.min.js"></script>
+
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>rCharts and Interactive Dashboards</h1>
+    <h2></h2>
+    <p>by Connie Zabarovskaya<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>A little about rCharts</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>rCharts is an R package to create, customize and publish interactive JavaScript visualizations from R </li>
+<li>Developed by Ramnath Vaidyanathan, creator of Slidify</li>
+<li>uses a familiar lattice style plotting interface.</li>
+<li>R code is converted to JavaScript on the back end, see it when you type </li>
+</ul>
+
+<pre><code>mychart$print()
+</code></pre>
+
+<ul>
+<li>rCharts by itself is interactive to a point, but within a Shiny app it allows input and modification of data in the chart</li>
+<li>Installation: </li>
+</ul>
+
+<pre><code>require(devtools) 
+install_github(&#39;rCharts&#39;, &#39;ramnathv&#39;) 
+</code></pre>
+
+<hr>
+
+<h2>Working with rCharts</h2>
+
+<p>Load the library, prepare data, create plot as is or assign it to a variable.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Interactive Chart</h2>
+  </hgroup>
+  <article data-timings="">
+    <div id = 'chart1' class = 'rChart highcharts'></div>
+
+<script type='text/javascript'>
+    (function($){
+        $(function () {
+            var chart = new Highcharts.Chart({
+ "dom": "chart1",
+"width":            800,
+"height":            400,
+"credits": {
+ "href": null,
+"text": null 
+},
+"exporting": {
+ "enabled": false 
+},
+"title": {
+ "text": null 
+},
+"yAxis": [
+ {
+ "title": {
+ "text": "Freq" 
+} 
+} 
+],
+"series": [
+ {
+ "data": [
+ [
+ "Black",
+            11 
+],
+[
+ "Brown",
+            50 
+],
+[
+ "Red",
+            10 
+],
+[
+ "Blond",
+            30 
+] 
+],
+"name": "Blue",
+"type": "column",
+"marker": {
+ "radius":              3 
+} 
+},
+{
+ "data": [
+ [
+ "Black",
+            32 
+],
+[
+ "Brown",
+            53 
+],
+[
+ "Red",
+            10 
+],
+[
+ "Blond",
+             3 
+] 
+],
+"name": "Brown",
+"type": "column",
+"marker": {
+ "radius":              3 
+} 
+},
+{
+ "data": [
+ [
+ "Black",
+             3 
+],
+[
+ "Brown",
+            15 
+],
+[
+ "Red",
+             7 
+],
+[
+ "Blond",
+             8 
+] 
+],
+"name": "Green",
+"type": "column",
+"marker": {
+ "radius":              3 
+} 
+},
+{
+ "data": [
+ [
+ "Black",
+            10 
+],
+[
+ "Brown",
+            25 
+],
+[
+ "Red",
+             7 
+],
+[
+ "Blond",
+             5 
+] 
+],
+"name": "Hazel",
+"type": "column",
+"marker": {
+ "radius":              3 
+} 
+} 
+],
+"xAxis": [
+ {
+ "title": {
+ "text": "Hair" 
+},
+"categories": [ "Black", "Brown", "Red", "Blond" ] 
+} 
+],
+"subtitle": {
+ "text": null 
+},
+"chart": {
+ "height":            400,
+"renderTo": "chart1" 
+},
+"id": "chart1" 
+});
+        });
+    })(jQuery);
+</script>
+
+<pre><code>library(rCharts)
+haireye = as.data.frame(HairEyeColor)
+n1 &lt;- hPlot(Freq ~ Hair, group = &#39;Eye&#39;, type = &#39;column&#39;,
+  data = subset(haireye, Sex == &#39;Male&#39;))
+n1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Popular rCharts libraries:</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Polychart (rPlot() function for basic, but powerful charts, inspired by ggplot2)</li>
+<li>Morris (mPlot() function for pretty time-series line graphs)</li>
+<li>NVD3 (nPlot() function based on d3js library for amazing interactive visualizations with little code and customization)</li>
+<li>xCharts (xPlot() function for slick looking charts using d3js, made by TenXer)</li>
+<li>HighCharts (hPlot() function interactive charts, time series graphs and map charts)</li>
+<li>Leaflet (Leaflet$new() function for mobile-friendly interactive maps)</li>
+<li>Rickshaw (Rickshaw$new() function for creating interactive time series graphs, developed at Shutterstock)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Example 1</h2>
+  </hgroup>
+  <article data-timings="">
+    <div id = 'chart2' class = 'rChart highcharts'></div>
+
+<script type='text/javascript'>
+    (function($){
+        $(function () {
+            var chart = new Highcharts.Chart({
+ "dom": "chart2",
+"width":            800,
+"height":            400,
+"credits": {
+ "href": null,
+"text": null 
+},
+"exporting": {
+ "enabled": false 
+},
+"title": {
+ "text": null 
+},
+"yAxis": [
+ {
+ "title": {
+ "text": "SepalWidth" 
+} 
+} 
+],
+"series": [
+ {
+ "data": [
+ [
+            4.3,
+             3,
+           0.1 
+],
+[
+            4.4,
+           2.9,
+           0.2 
+],
+[
+            4.4,
+             3,
+           0.2 
+],
+[
+            4.4,
+           3.2,
+           0.2 
+],
+[
+            4.5,
+           2.3,
+           0.3 
+],
+[
+            4.6,
+           3.1,
+           0.2 
+],
+[
+            4.6,
+           3.2,
+           0.2 
+],
+[
+            4.6,
+           3.4,
+           0.3 
+],
+[
+            4.6,
+           3.6,
+           0.2 
+],
+[
+            4.7,
+           3.2,
+           0.2 
+],
+[
+            4.7,
+           3.2,
+           0.2 
+],
+[
+            4.8,
+             3,
+           0.1 
+],
+[
+            4.8,
+             3,
+           0.3 
+],
+[
+            4.8,
+           3.1,
+           0.2 
+],
+[
+            4.8,
+           3.4,
+           0.2 
+],
+[
+            4.8,
+           3.4,
+           0.2 
+],
+[
+            4.9,
+             3,
+           0.2 
+],
+[
+            4.9,
+           3.1,
+           0.1 
+],
+[
+            4.9,
+           3.1,
+           0.2 
+],
+[
+            4.9,
+           3.6,
+           0.1 
+],
+[
+              5,
+             3,
+           0.2 
+],
+[
+              5,
+           3.2,
+           0.2 
+],
+[
+              5,
+           3.3,
+           0.2 
+],
+[
+              5,
+           3.4,
+           0.2 
+],
+[
+              5,
+           3.4,
+           0.4 
+],
+[
+              5,
+           3.5,
+           0.3 
+],
+[
+              5,
+           3.5,
+           0.6 
+],
+[
+              5,
+           3.6,
+           0.2 
+],
+[
+            5.1,
+           3.3,
+           0.5 
+],
+[
+            5.1,
+           3.4,
+           0.2 
+],
+[
+            5.1,
+           3.5,
+           0.2 
+],
+[
+            5.1,
+           3.5,
+           0.3 
+],
+[
+            5.1,
+           3.7,
+           0.4 
+],
+[
+            5.1,
+           3.8,
+           0.3 
+],
+[
+            5.1,
+           3.8,
+           0.4 
+],
+[
+            5.1,
+           3.8,
+           0.2 
+],
+[
+            5.2,
+           3.4,
+           0.2 
+],
+[
+            5.2,
+           3.5,
+           0.2 
+],
+[
+            5.2,
+           4.1,
+           0.1 
+],
+[
+            5.3,
+           3.7,
+           0.2 
+],
+[
+            5.4,
+           3.4,
+           0.2 
+],
+[
+            5.4,
+           3.4,
+           0.4 
+],
+[
+            5.4,
+           3.7,
+           0.2 
+],
+[
+            5.4,
+           3.9,
+           0.4 
+],
+[
+            5.4,
+           3.9,
+           0.4 
+],
+[
+            5.5,
+           3.5,
+           0.2 
+],
+[
+            5.5,
+           4.2,
+           0.2 
+],
+[
+            5.7,
+           3.8,
+           0.3 
+],
+[
+            5.7,
+           4.4,
+           0.4 
+],
+[
+            5.8,
+             4,
+           0.2 
+] 
+],
+"name": "setosa",
+"type": "bubble",
+"marker": {
+ "radius":              3 
+} 
+},
+{
+ "data": [
+ [
+            4.9,
+           2.4,
+             1 
+],
+[
+              5,
+             2,
+             1 
+],
+[
+              5,
+           2.3,
+             1 
+],
+[
+            5.1,
+           2.5,
+           1.1 
+],
+[
+            5.2,
+           2.7,
+           1.4 
+],
+[
+            5.4,
+             3,
+           1.5 
+],
+[
+            5.5,
+           2.3,
+           1.3 
+],
+[
+            5.5,
+           2.4,
+           1.1 
+],
+[
+            5.5,
+           2.4,
+             1 
+],
+[
+            5.5,
+           2.5,
+           1.3 
+],
+[
+            5.5,
+           2.6,
+           1.2 
+],
+[
+            5.6,
+           2.5,
+           1.1 
+],
+[
+            5.6,
+           2.7,
+           1.3 
+],
+[
+            5.6,
+           2.9,
+           1.3 
+],
+[
+            5.6,
+             3,
+           1.5 
+],
+[
+            5.6,
+             3,
+           1.3 
+],
+[
+            5.7,
+           2.6,
+             1 
+],
+[
+            5.7,
+           2.8,
+           1.3 
+],
+[
+            5.7,
+           2.8,
+           1.3 
+],
+[
+            5.7,
+           2.9,
+           1.3 
+],
+[
+            5.7,
+             3,
+           1.2 
+],
+[
+            5.8,
+           2.6,
+           1.2 
+],
+[
+            5.8,
+           2.7,
+             1 
+],
+[
+            5.8,
+           2.7,
+           1.2 
+],
+[
+            5.9,
+             3,
+           1.5 
+],
+[
+            5.9,
+           3.2,
+           1.8 
+],
+[
+              6,
+           2.2,
+             1 
+],
+[
+              6,
+           2.7,
+           1.6 
+],
+[
+              6,
+           2.9,
+           1.5 
+],
+[
+              6,
+           3.4,
+           1.6 
+],
+[
+            6.1,
+           2.8,
+           1.3 
+],
+[
+            6.1,
+           2.8,
+           1.2 
+],
+[
+            6.1,
+           2.9,
+           1.4 
+],
+[
+            6.1,
+             3,
+           1.4 
+],
+[
+            6.2,
+           2.2,
+           1.5 
+],
+[
+            6.2,
+           2.9,
+           1.3 
+],
+[
+            6.3,
+           2.3,
+           1.3 
+],
+[
+            6.3,
+           2.5,
+           1.5 
+],
+[
+            6.3,
+           3.3,
+           1.6 
+],
+[
+            6.4,
+           2.9,
+           1.3 
+],
+[
+            6.4,
+           3.2,
+           1.5 
+],
+[
+            6.5,
+           2.8,
+           1.5 
+],
+[
+            6.6,
+           2.9,
+           1.3 
+],
+[
+            6.6,
+             3,
+           1.4 
+],
+[
+            6.7,
+             3,
+           1.7 
+],
+[
+            6.7,
+           3.1,
+           1.4 
+],
+[
+            6.7,
+           3.1,
+           1.5 
+],
+[
+            6.8,
+           2.8,
+           1.4 
+],
+[
+            6.9,
+           3.1,
+           1.5 
+],
+[
+              7,
+           3.2,
+           1.4 
+] 
+],
+"name": "versicolor",
+"type": "bubble",
+"marker": {
+ "radius":              3 
+} 
+},
+{
+ "data": [
+ [
+            4.9,
+           2.5,
+           1.7 
+],
+[
+            5.6,
+           2.8,
+             2 
+],
+[
+            5.7,
+           2.5,
+             2 
+],
+[
+            5.8,
+           2.7,
+           1.9 
+],
+[
+            5.8,
+           2.7,
+           1.9 
+],
+[
+            5.8,
+           2.8,
+           2.4 
+],
+[
+            5.9,
+             3,
+           1.8 
+],
+[
+              6,
+           2.2,
+           1.5 
+],
+[
+              6,
+             3,
+           1.8 
+],
+[
+            6.1,
+           2.6,
+           1.4 
+],
+[
+            6.1,
+             3,
+           1.8 
+],
+[
+            6.2,
+           2.8,
+           1.8 
+],
+[
+            6.2,
+           3.4,
+           2.3 
+],
+[
+            6.3,
+           2.5,
+           1.9 
+],
+[
+            6.3,
+           2.7,
+           1.8 
+],
+[
+            6.3,
+           2.8,
+           1.5 
+],
+[
+            6.3,
+           2.9,
+           1.8 
+],
+[
+            6.3,
+           3.3,
+           2.5 
+],
+[
+            6.3,
+           3.4,
+           2.4 
+],
+[
+            6.4,
+           2.7,
+           1.9 
+],
+[
+            6.4,
+           2.8,
+           2.1 
+],
+[
+            6.4,
+           2.8,
+           2.2 
+],
+[
+            6.4,
+           3.1,
+           1.8 
+],
+[
+            6.4,
+           3.2,
+           2.3 
+],
+[
+            6.5,
+             3,
+           2.2 
+],
+[
+            6.5,
+             3,
+           1.8 
+],
+[
+            6.5,
+             3,
+             2 
+],
+[
+            6.5,
+           3.2,
+             2 
+],
+[
+            6.7,
+           2.5,
+           1.8 
+],
+[
+            6.7,
+             3,
+           2.3 
+],
+[
+            6.7,
+           3.1,
+           2.4 
+],
+[
+            6.7,
+           3.3,
+           2.1 
+],
+[
+            6.7,
+           3.3,
+           2.5 
+],
+[
+            6.8,
+             3,
+           2.1 
+],
+[
+            6.8,
+           3.2,
+           2.3 
+],
+[
+            6.9,
+           3.1,
+           2.1 
+],
+[
+            6.9,
+           3.1,
+           2.3 
+],
+[
+            6.9,
+           3.2,
+           2.3 
+],
+[
+            7.1,
+             3,
+           2.1 
+],
+[
+            7.2,
+             3,
+           1.6 
+],
+[
+            7.2,
+           3.2,
+           1.8 
+],
+[
+            7.2,
+           3.6,
+           2.5 
+],
+[
+            7.3,
+           2.9,
+           1.8 
+],
+[
+            7.4,
+           2.8,
+           1.9 
+],
+[
+            7.6,
+             3,
+           2.1 
+],
+[
+            7.7,
+           2.6,
+           2.3 
+],
+[
+            7.7,
+           2.8,
+             2 
+],
+[
+            7.7,
+             3,
+           2.3 
+],
+[
+            7.7,
+           3.8,
+           2.2 
+],
+[
+            7.9,
+           3.8,
+             2 
+] 
+],
+"name": "virginica",
+"type": "bubble",
+"marker": {
+ "radius":              3 
+} 
+} 
+],
+"xAxis": [
+ {
+ "title": {
+ "text": "SepalLength" 
+} 
+} 
+],
+"subtitle": {
+ "text": null 
+},
+"chart": {
+ "height":            400,
+"renderTo": "chart2" 
+},
+"id": "chart2" 
+});
+        });
+    })(jQuery);
+</script>
+
+<pre><code>names(iris) = gsub(&quot;\\.&quot;, &quot;&quot;, names(iris))
+plot1 &lt;- hPlot(x=&quot;SepalLength&quot;, y=&quot;SepalWidth&quot;, type=&quot;bubble&quot;, group =&quot;Species&quot;,
+size = PetalWidth, data=iris)
+plot1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Example 2</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>(courtesy of <a href="http://ramnathv.github.io/rCharts/">http://ramnathv.github.io/rCharts/</a>)
+Try this in RStudio</p>
+
+<pre><code>library(rCharts)
+usp = reshape2::melt(USPersonalExpenditure)
+# get the decades into a date Rickshaw likes
+usp$Var2 &lt;- as.numeric(as.POSIXct(paste0(usp$Var2, &quot;-01-01&quot;)))
+p4 &lt;- Rickshaw$new()
+p4$layer(value ~ Var2, group = &quot;Var1&quot;, data = usp, type = &quot;area&quot;, width = 560)
+# add a helpful slider 
+p4$set(slider = TRUE)
+p4$
+</code></pre>
+
+<p>See it live here: <a href="http://rcharts.io/viewer/?10aed0d9466518e9c265#.U9AWhbH-L1U">http://rcharts.io/viewer/?10aed0d9466518e9c265#.U9AWhbH-L1U</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Example 3</h2>
+  </hgroup>
+  <article data-timings="">
+    <div id = 'chart3' class = 'rChart nvd3'></div>
+
+<script type='text/javascript'>
+ $(document).ready(function(){
+      drawchart3()
+    });
+    function drawchart3(){  
+      var opts = {
+ "dom": "chart3",
+"width":    800,
+"height":    400,
+"x": "State",
+"y": "value",
+"group": "variable",
+"type": "multiBarChart",
+"id": "chart3" 
+},
+        data = [
+ {
+ "State": "CALIFORNIA",
+"UFOReports": 10639,
+"variable": "AirForce",
+"value": 7 
+},
+{
+ "State": "MISSOURI",
+"UFOReports": 1772,
+"variable": "AirForce",
+"value": 1 
+},
+{
+ "State": "NEW YORK",
+"UFOReports": 3580,
+"variable": "AirForce",
+"value": null 
+},
+{
+ "State": "TEXAS",
+"UFOReports": 4106,
+"variable": "AirForce",
+"value": 8 
+},
+{
+ "State": "CALIFORNIA",
+"UFOReports": 10639,
+"variable": "Army",
+"value": 5 
+},
+{
+ "State": "MISSOURI",
+"UFOReports": 1772,
+"variable": "Army",
+"value": 1 
+},
+{
+ "State": "NEW YORK",
+"UFOReports": 3580,
+"variable": "Army",
+"value": 5 
+},
+{
+ "State": "TEXAS",
+"UFOReports": 4106,
+"variable": "Army",
+"value": 3 
+},
+{
+ "State": "CALIFORNIA",
+"UFOReports": 10639,
+"variable": "CoastGuard",
+"value": 2 
+},
+{
+ "State": "MISSOURI",
+"UFOReports": 1772,
+"variable": "CoastGuard",
+"value": null 
+},
+{
+ "State": "NEW YORK",
+"UFOReports": 3580,
+"variable": "CoastGuard",
+"value": null 
+},
+{
+ "State": "TEXAS",
+"UFOReports": 4106,
+"variable": "CoastGuard",
+"value": null 
+},
+{
+ "State": "CALIFORNIA",
+"UFOReports": 10639,
+"variable": "MarineCorps",
+"value": 5 
+},
+{
+ "State": "MISSOURI",
+"UFOReports": 1772,
+"variable": "MarineCorps",
+"value": null 
+},
+{
+ "State": "NEW YORK",
+"UFOReports": 3580,
+"variable": "MarineCorps",
+"value": null 
+},
+{
+ "State": "TEXAS",
+"UFOReports": 4106,
+"variable": "MarineCorps",
+"value": null 
+},
+{
+ "State": "CALIFORNIA",
+"UFOReports": 10639,
+"variable": "Navy",
+"value": 13 
+},
+{
+ "State": "MISSOURI",
+"UFOReports": 1772,
+"variable": "Navy",
+"value": null 
+},
+{
+ "State": "NEW YORK",
+"UFOReports": 3580,
+"variable": "Navy",
+"value": 1 
+},
+{
+ "State": "TEXAS",
+"UFOReports": 4106,
+"variable": "Navy",
+"value": 4 
+},
+{
+ "State": "CALIFORNIA",
+"UFOReports": 10639,
+"variable": "Total",
+"value": 32 
+},
+{
+ "State": "MISSOURI",
+"UFOReports": 1772,
+"variable": "Total",
+"value": 2 
+},
+{
+ "State": "NEW YORK",
+"UFOReports": 3580,
+"variable": "Total",
+"value": 6 
+},
+{
+ "State": "TEXAS",
+"UFOReports": 4106,
+"variable": "Total",
+"value": 15 
+} 
+]
+  
+      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus" || opts.type==="bulletChart")) {
+        var data = d3.nest()
+          .key(function(d){
+            //return opts.group === undefined ? 'main' : d[opts.group]
+            //instead of main would think a better default is opts.x
+            return opts.group === undefined ? opts.y : d[opts.group];
+          })
+          .entries(data);
+      }
+      
+      if (opts.disabled != undefined){
+        data.map(function(d, i){
+          d.disabled = opts.disabled[i]
+        })
+      }
+      
+      nv.addGraph(function() {
+        var chart = nv.models[opts.type]()
+          .width(opts.width)
+          .height(opts.height)
+          
+        if (opts.type != "bulletChart"){
+          chart
+            .x(function(d) { return d[opts.x] })
+            .y(function(d) { return d[opts.y] })
+        }
+          
+         
+        
+          
+        
+
+        
+        
+        
+      
+       d3.select("#" + opts.id)
+        .append('svg')
+        .datum(data)
+        .transition().duration(500)
+        .call(chart);
+
+       nv.utils.windowResize(chart.update);
+       return chart;
+      });
+    };
+</script>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Code for Example 3</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>ufo &lt;- subset(mergeddata, State == &quot;CALIFORNIA&quot;| State == &quot;TEXAS&quot;| 
+State == &quot;NEW YORK&quot; | State == &quot;MISSOURI&quot;)
+ufo1 &lt;- melt(ufo, id=c(&quot;State&quot;, &quot;UFOReports&quot;), na.rm = FALSE)
+ufoplot &lt;- nPlot(value ~ State, group = &quot;variable&quot;, data = ufo1, 
+type = &quot;multiBarChart&quot;)
+ufoplot
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Example 4</h2>
+  </hgroup>
+  <article data-timings="">
+    <div id = 'chart4' class = 'rChart highcharts'></div>
+
+<script type='text/javascript'>
+    (function($){
+        $(function () {
+            var chart = new Highcharts.Chart({
+ "dom": "chart4",
+"width":            800,
+"height":            400,
+"credits": {
+ "href": null,
+"text": null 
+},
+"exporting": {
+ "enabled": false 
+},
+"title": {
+ "text": "UFO Reports and Total number of Military Bases by State" 
+},
+"yAxis": [
+ {
+ "title": {
+ "text": "UFOReports" 
+} 
+} 
+],
+"series": [
+ {
+ "data": [
+ [
+ 1,
+203,
+1 
+],
+[
+ 1,
+226,
+1 
+],
+[
+ 1,
+231,
+1 
+],
+[
+ 1,
+452,
+1 
+],
+[
+ 1,
+553,
+1 
+],
+[
+ 1,
+588,
+1 
+],
+[
+ 1,
+627,
+1 
+],
+[
+ 1,
+2724,
+1 
+],
+[
+ 2,
+153,
+2 
+],
+[
+ 2,
+812,
+1 
+],
+[
+ 2,
+1014,
+1 
+],
+[
+ 2,
+1772,
+1 
+],
+[
+ 2,
+2306,
+1 
+],
+[
+ 3,
+719,
+1 
+],
+[
+ 3,
+742,
+1 
+],
+[
+ 3,
+1500,
+1 
+],
+[
+ 4,
+927,
+3 
+],
+[
+ 4,
+2921,
+1 
+],
+[
+ 5,
+400,
+2 
+],
+[
+ 5,
+669,
+1 
+],
+[
+ 5,
+857,
+3 
+],
+[
+ 6,
+470,
+2 
+],
+[
+ 6,
+1667,
+1 
+],
+[
+ 6,
+1689,
+5 
+],
+[
+ 6,
+2994,
+2 
+],
+[
+ 7,
+118,
+1 
+],
+[
+ 7,
+789,
+2 
+],
+[
+ 7,
+2093,
+2 
+],
+[
+ 8,
+999,
+1 
+],
+[
+ 8,
+1254,
+2 
+],
+[
+ 8,
+4730,
+2 
+],
+[
+ 10,
+398,
+1 
+],
+[
+ 12,
+1526,
+2 
+],
+[
+ 15,
+4106,
+8 
+],
+[
+ 17,
+4711,
+5 
+],
+[
+ 20,
+1544,
+1 
+],
+[
+ 32,
+10639,
+7 
+] 
+],
+"type": "bubble",
+"marker": {
+ "radius":              3 
+} 
+} 
+],
+"legend": {
+ "enabled": false 
+},
+"xAxis": [
+ {
+ "title": {
+ "text": "Total Number of Military Bases in State" 
+} 
+} 
+],
+"subtitle": {
+ "text": "Size of bubble - number of AirForce Bases" 
+},
+"chart": {
+ "zoomType": "xy",
+"renderTo": "chart4" 
+},
+"tooltip": {
+ "formatter":  function() { return 'All Miliary Bases: '     + this.point.x + '<br />' + 'UFO Reports: '    + this.point.y  + '<br />'; }  
+},
+"id": "chart4" 
+});
+        });
+    })(jQuery);
+</script>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Code for Example 4</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>ufoplot &lt;- hPlot(x=&quot;Total&quot;, y = &quot;UFOReports&quot;, data = mergeddata, type = &quot;bubble&quot;,
+title = &quot;UFO Reports and Total number of Military Bases by State&quot;,  
+subtitle = &quot;Size of bubble - number of AirForce Bases&quot;, 
+size = &quot;AirForce&quot;)
+ufoplot$chart(zoomType = &quot;xy&quot;) # will allow to draw a rectangle with mouse to zoom on an area
+ufoplot$tooltip( formatter = &quot;#! function() { return &#39;All Miliary Bases: &#39; + 
+this.point.x + &#39;&lt;br /&gt;&#39; + &#39;UFO Reports: &#39; + this.point.y  + &#39;&lt;br /&gt;&#39;; } !#&quot;)
+ufoplot$xAxis(title = list(text = &quot;Total Number of Military Bases in State&quot;))
+ufoplot
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Exercise 1</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Load rCharts (first install it if you haven&#39;t yet)</li>
+<li>Transform the ChickWeight dataset (base R) so that Time variable is &quot;fuzzy&quot;: 
+ChickWeight$Time &lt;- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)</li>
+<li>Using Highcharts library build a &quot;scatter&quot; plot to show the growth pattern of chickens: weight over Time, depending on their diet type (group it by Diet), and use a relevant title, for example &quot;Chicken Weight over Time&quot;</li>
+<li>Rename the y-axis and x-axis default values to be descriptive and consistent</li>
+<li>Change the width of the chart to be 700px and height - 450px</li>
+<li>Call your plot, so that it gets displayed, below is a sample</li>
+</ol>
+
+<pre><code>ufoplot &lt;- hPlot(x=&quot;Total&quot;, y = &quot;UFOReports&quot;, data = mergeddata, type = &quot;scatter&quot;, 
+title = &quot;UFO Reports and Total number of Military Bases&quot;)
+ufoplot$chart(width = 450) 
+ufoplot$xAxis(title = list(text = &quot;Total Number of Military Bases in State&quot;))
+ufoplot
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Publishing rCharts</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Ways to share:</p>
+
+<ul>
+<li>Standalone html page (publish to gist.github.com or rpubs.com), the link is returned. Can be updated. Gist allows several files to be uploaded.</li>
+<li>Within Shiny Application (functions renderChart &amp; showOutput)</li>
+<li>Embed into rmd doc, using knit2html, or into a blog post using slidify</li>
+<li>To publish on gist, use your GitHub acount username and password at the prompt after this command executes:
+<code>ufoplot$publish(&#39;UFO Reports&#39;, host = &#39;gist&#39;)</code></li>
+<li>To publish on RPubs, use your account info and tweak RProfile if necessary (see here: <a href="http://rpubs.com/conniez/ufo_rchart):">http://rpubs.com/conniez/ufo_rchart):</a>
+<code>ufoplot$publish(&#39;UFO Reports&#39;, host = &#39;rpubs&#39;)</code></li>
+<li>Some commands for working with Shiny and Shinyapps.io
+<code>
+runApp(&quot;myapp&quot;)
+library(shinyapps)
+deployApp(&quot;myapp&quot;)
+</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>On Gist</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img width = 1000, src="assets/img/rCharts publisheed on gist.jpg" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>On rPubs</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>First it opens a confirmation dialog. Here&#39;s the result</p>
+
+<p><img width = 1000, src="assets/img/rCharts on RPubs.jpg" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>rCharts + Shiny</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You can host your apps in the cloud for free with ShinyApps.io. Just create an account and link to your computer. There are some performance and memory limitations.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Example with rCharts (Exercise 2)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code># ui.R
+library(rCharts)
+shinyUI(fluidPage(
+  h2(&quot;rCharts Example&quot;),
+  showOutput(&quot;myChart&quot;, &quot;highcharts&quot;)))
+</code></pre>
+
+<pre><code># server.R
+library(rCharts)
+shinyServer(function(input, output) {
+  output$myChart &lt;- renderChart({
+    ChickWeight$Time &lt;- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)
+    chickPlot &lt;- hPlot(weight ~ Time, type=&quot;scatter&quot;, group = &quot;Diet&quot;, data=ChickWeight, title = &quot;Chicken Weight over Time&quot;)
+    chickPlot$xAxis(title = list(text = &quot;Time (Days)&quot;))
+    chickPlot$yAxis(title = list(text = &quot;Weight&quot;))
+    chickPlot$chart(width = 600, height = 450)
+    chickPlot$addParams(dom = &quot;myChart&quot;)
+    return(chickPlot)    
+  })})
+</code></pre>
+
+<hr>
+
+<h2>ShinyGridster</h2>
+
+<ul>
+<li>developed by Winston Chang (<a href="mailto:winston@rstudio.com">winston@rstudio.com</a>)</li>
+<li>find source files here: <a href="https://github.com/wch/shiny-gridster">https://github.com/wch/shiny-gridster</a></li>
+<li>usage: within &quot;fluidPage()&quot; or other layout function in Shiny, specify gridster block dimensions, call each block with its size and position. Margin sizes are optional. Example:
+<code>
+shinyUI(bootstrapPage(
+gridster(width = 200, height = 200, marginx = 16, marginy = 16,
+gridsterItem(col = 1, row = 1, sizex = 1, sizey = 1,
+  sliderInput(&quot;n&quot;, &quot;Input value:&quot;, min = 0, max = 50, value = 10)
+),
+gridsterItem(col = 2, row = 1, sizex = 1, sizey = 1,
+  textOutput(&quot;myText&quot;)
+),
+gridsterItem(col = 1, row = 2, sizex = 2, sizey = 1,
+  plotOutput(&quot;myPlot&quot;, height = 200)
+)))
+</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Exercise 3</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Make the chart in your shiny app from exe 2 smaller: 390x320</li>
+<li>Add the grister function to the ui.R file in your shiny app, within the fluidPage() function. To look up an example, type:
+<code>
+library(shinyGridster)
+?gridster
+</code></li>
+<li>Specify gridster width of 400 and height of 330.</li>
+<li>Create 3 gridsterItem&#39;s: 2 for 1st row and 1 for second row.</li>
+<li><p>Your chart should be in the top left element, add the following in the second on top element: create another output element in server.R, similar to mychart, but using renderTable({}) function and put this inside:</p>
+
+<pre><code>aggregate(weight ~ feed, data = chickwts, mean)
+</code></pre>
+
+<p>Call this in your ui.R gridsterItem using tableOutput() function and passing it the name of your output from server.R</p></li>
+<li><p>Remove the h2() text element; add your own conclusion using p() function in the lower element. </p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Customizing Gridster</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>sizey and sizex can help create irregular grids (elements of different dimensions)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Why Dashboards in R are Possible</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>R allows connecting to any database</li>
+<li>invalidateLater(), reactivePoll() functions in Shiny app</li>
+<li>Any graphical packages can be used for charts</li>
+<li>Control layout with ShinyGridster</li>
+<li>Stylesheets supported (unlimited customization)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Things to Remember(rCharts)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In a shiny app use function: showOutput(&quot;myChart&quot;, &quot;polychart&quot;), where you specify the name of the output object and the name of the library in lowercase. </li>
+<li>Don&#39;t forget plot$addParams() and return() in the output element used to create rCharts in server.R file</li>
+<li>If you can&#39;t see your chart in Viewer of Rstudio, try opening it in browser by clicking the Open in Browser button.</li>
+<li>Sometimes, if a chart doesn&#39;t show up in a Shiny app with several rCharts, you may have to use this &quot;wrapping&quot; trick:</li>
+</ul>
+
+<pre><code>div(class=&#39;wrapper&#39;, tags$style(&quot;.highcharts{ height: 100%; width: 800px;}&quot;),
+showOutput(&quot;infChart&quot;, &quot;highcharts&quot;))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>rCharts API</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A lot of the &quot;properties&quot; of the plot object can be customized. All you need to do is get access to the documentation of the rChart library or the original JavaScript library.</p>
+
+<p>To demonstrate the depth of possible customization, we will use an example Highcharts JavaScript library, using their Reference page: <a href="http://api.highcharts.com/">http://api.highcharts.com/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Highcharts API Example</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Below are the casual &quot;rules&quot; of conversion for HighCharts.</p>
+
+<ul>
+<li>the elements of a chart are in an object in JS, that gets converted into a list in R; the main object properties will look like this, e.g. <code>mychart$chart()</code> or <code>mychart$plotOptions()</code></li>
+<li>these main properties have nested properties, and if the property you customize doesn&#39;t have more nested properties (chart: {height: 800}), then use &quot;=&quot; to simply assign that value to a parameter in R, e.g. <code>mychart$chart(height = 800)</code></li>
+<li><p>if the properties you&#39;re attemting to customize has any &quot;nested&quot; properties - use &quot;=&quot; to assign a list() inside of which you will put what is &quot;nested&quot;, e.g.</p>
+
+<p><code>mychart$plotOptions(column = (dataLabels = list(enabled=TRUE)))</code></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Highcharts API (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The following demonstration will make these &quot;rules&quot; much clearer.</p>
+
+<p><img width = 1000, src="assets/img/conversion.png" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Example of Customization</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The following example just scratches the surface of all the things you can do in rCharts.</p>
+
+<script type='text/javascript' src=//code.jquery.com/jquery-1.9.1.min.js></script>
+
+<script type='text/javascript' src=//code.highcharts.com/highcharts.js></script>
+
+<script type='text/javascript' src=//code.highcharts.com/highcharts-more.js"></script>
+
+<script type='text/javascript' src=//code.highcharts.com/modules/exporting.js></script> 
+
+<p><style>
+  .rChart {
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+    width: 800px;
+    height: 400px;
+  }<br>
+  </style></p>
+
+<div id = 'chart1528347d7675' class = 'rChart highcharts'></div>
+
+<script type='text/javascript'>
+    (function($){
+        $(function () {
+            var chart = new Highcharts.Chart({
+ "dom": "chart1528347d7675",
+"width":            800,
+"height":            400,
+"credits": {
+ "href": null,
+"text": null 
+},
+"exporting": {
+ "enabled": false 
+},
+"title": {
+ "text": "Quantity of Fruits Collected by Children" 
+},
+"yAxis": [
+ {
+ "title": {
+ "text": "Quantity of Fruits" 
+},
+"tickInterval":              2 
+} 
+],
+"series": [
+ {
+ "data": [
+ [
+ "Alice",
+            15 
+],
+[
+ "Andy",
+            20 
+],
+[
+ "John",
+            23 
+],
+[
+ "Sam",
+            10 
+] 
+],
+"name": "Apples",
+"type": "column",
+"marker": {
+ "radius":              3 
+} 
+},
+{
+ "data": [
+ [
+ "Alice",
+             4 
+],
+[
+ "Andy",
+            10 
+],
+[
+ "John",
+             5 
+],
+[
+ "Sam",
+             8 
+] 
+],
+"name": "Oranges",
+"type": "column",
+"marker": {
+ "radius":              3 
+} 
+} 
+],
+"xAxis": [
+ {
+ "title": {
+ "text": "Name of Child" 
+},
+"type": "category",
+"labels": {
+ "rotation":             60,
+"align": "left" 
+} 
+} 
+],
+"subtitle": {
+ "text": null 
+},
+"chart": {
+ "height":            500,
+"zoomType": "xy",
+"renderTo": "chart1528347d7675" 
+},
+"colors": [ "#339900", "#FF9900" ],
+"plotOptions": {
+ "column": {
+ "stacking": "normal",
+"dataLabels": {
+ "enabled": true,
+"align": "center",
+"verticalAlign": "top",
+"color": "#FFFFFF",
+"y":             10 
+} 
+} 
+},
+"legend": {
+ "align": "center",
+"verticalAlign": "top",
+"y":             30,
+"margin":             20 
+},
+"id": "chart1528347d7675" 
+});
+        });
+    })(jQuery);
+</script>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Code for the Demo</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>fruits&lt;-data.frame(name = c(&quot;John&quot;, &quot;Alice&quot;, &quot;Andy&quot;, &quot;Sam&quot;, &quot;John&quot;, &quot;Alice&quot;, &quot;Andy&quot;, &quot;Sam&quot;), 
+quant = c(23, 15, 20, 10, 5, 4, 10, 8), 
+fruit = c(rep(&quot;Apples&quot;, 4), rep(&quot;Oranges&quot;, 4)))
+
+samplePlot&lt;- hPlot(quant ~ name, data = fruits, group = &quot;fruit&quot;, type = &#39;column&#39;, 
+                   title = &quot;Quantity of Fruits Collected by Children&quot;)
+samplePlot$xAxis(title = list(text=&quot;Name of Child&quot;), type = &quot;category&quot;, labels = list
+                 (rotation = 60, align = &quot;left&quot;))
+samplePlot$chart(height = 500, zoomType = &quot;xy&quot;)
+samplePlot$colors(&quot;#339900&quot;, &quot;#FF9900&quot;)
+samplePlot$plotOptions(column = list(stacking = &quot;normal&quot;, dataLabels = list(enabled = T, 
+                              align = &#39;center&#39;, verticalAlign = &quot;top&quot;, 
+                              color = &#39;#FFFFFF&#39;, y = 10)))
+samplePlot$yAxis(title = list(text = &quot;Quantity of Fruits&quot;), tickInterval = 2)
+samplePlot$legend(align = &#39;center&#39;, verticalAlign = &#39;top&#39;, y = 30, margin = 20)
+samplePlot
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Highcharts API (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Unfortunately, this doesn&#39;t work so well for all JavaScript variables (see &quot;formatter&quot; in the Example 4)</p>
+
+<p>Print the JavaScript code to prove that everything converted correctly, using mychart$print() line.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Resources Used (on rCharts and Shiny)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Getting Started: <a href="http://ramnathv.github.io/rCharts/">http://ramnathv.github.io/rCharts/</a></li>
+<li>What happens behind the scenes: <a href="http://rcharts.io/howitworks/">http://rcharts.io/howitworks/</a> </li>
+<li>Presentation on how to share: <a href="http://rcharts.io/NYC_May_2014/slides/02_share/#5">http://rcharts.io/NYC_May_2014/slides/02_share/#5</a></li>
+<li>Examples by creator: <a href="http://ramnathv.github.io/rChartsShiny/">http://ramnathv.github.io/rChartsShiny/</a></li>
+<li>Example of shiny app with downloading data from internet: <a href="https://github.com/ramnathv/rChartsShiny/blob/gh-pages/rChartOECD/global.R">https://github.com/ramnathv/rChartsShiny/blob/gh-pages/rChartOECD/global.R</a></li>
+<li>Great examples of all types of charts in NVD3: <a href="http://ramnathv.github.io/posts/rcharts-nvd3/index.html">http://ramnathv.github.io/posts/rcharts-nvd3/index.html</a></li>
+<li>Great examples with Highcharts: <a href="http://rpubs.com/kohske/12409">http://rpubs.com/kohske/12409</a> (and this one <a href="http://rstudio-pubs-static.s3.amazonaws.com/16699_4bc388ebe1454c84aaab3d22d17e3aaf.html">http://rstudio-pubs-static.s3.amazonaws.com/16699_4bc388ebe1454c84aaab3d22d17e3aaf.html</a>)</li>
+<li>What chart to use when: <a href="http://timelyportfolio.github.io/rCharts_nvd3_systematic/cluster_weights.html">http://timelyportfolio.github.io/rCharts_nvd3_systematic/cluster_weights.html</a></li>
+<li>Examples from Ramnath NVD3: <a href="https://github.com/ramnathv/rCharts/blob/master/inst/libraries/nvd3/examples.R">https://github.com/ramnathv/rCharts/blob/master/inst/libraries/nvd3/examples.R</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Resources Used (on rCharts and Shiny)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How to embed into Rmarkdown: <a href="http://bl.ocks.org/ramnathv/raw/8084330/">http://bl.ocks.org/ramnathv/raw/8084330/</a> (and this <a href="http://timelyportfolio.github.io/rCharts_share/showingoff.html">http://timelyportfolio.github.io/rCharts_share/showingoff.html</a>)</li>
+<li>A very detailed explanation on how to use Highcharts API for rCharts:<a href="http://reinholdsson.github.io/rcharts-highcharts-api-docs/">http://reinholdsson.github.io/rcharts-highcharts-api-docs/</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='A little about rCharts'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Interactive Chart'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Popular rCharts libraries:'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Example 1'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Example 2'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Example 3'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Code for Example 3'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Example 4'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Code for Example 4'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Exercise 1'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Publishing rCharts'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='On Gist'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='On rPubs'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='rCharts + Shiny'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Example with rCharts (Exercise 2)'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Exercise 3'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Customizing Gridster'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Why Dashboards in R are Possible'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Things to Remember(rCharts)'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='rCharts API'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Highcharts API Example'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Highcharts API (Cont.)'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Example of Customization'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Code for the Demo'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Highcharts API (Cont.)'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Resources Used (on rCharts and Shiny)'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Resources Used (on rCharts and Shiny)'>
+         27
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
