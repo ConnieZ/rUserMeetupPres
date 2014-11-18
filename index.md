@@ -1038,7 +1038,7 @@ n1
 ```
 names(iris) = gsub("\\.", "", names(iris))
 plot1 <- hPlot(x="SepalLength", y="SepalWidth", type="bubble", group ="Species",
-size = PetalWidth, data=iris)
+size = "PetalWidth", data=iris)
 plot1
 ```
 
