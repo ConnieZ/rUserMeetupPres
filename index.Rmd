@@ -248,11 +248,8 @@ shinyUI(fluidPage(
 library(rCharts)
 shinyServer(function(input, output) {
   output$myChart <- renderChart({
-    ChickWeight$Time <- ChickWeight$Time + runif(length(ChickWeight$Time), 0, 1)
-    chickPlot <- hPlot(weight ~ Time, type="scatter", group = "Diet", data=ChickWeight, title = "Chicken Weight over Time")
-    chickPlot$xAxis(title = list(text = "Time (Days)"))
-    chickPlot$yAxis(title = list(text = "Weight"))
-    chickPlot$chart(width = 600, height = 450)
+    # code for the chart from Exe 1
+    # then these lines follow
     chickPlot$addParams(dom = "myChart")
     return(chickPlot)    
   })})
